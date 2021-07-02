@@ -42,25 +42,16 @@ class PostController extends Controller
     /* seguire il suggerimento per il PostRequest in modo tale da eseguire il collegamento
     "use App\Http\Requests\PostRequest;" */
     {
-    /*     $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|min:3',
-        ]); */
-
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'],'-');
-
         $slug_exist = Post::where('slug',$data['slug'])->first();
         $counter = 0;
-        while($slug_exist){
+        while($slug_exist){                 /* fintanto che esiste uno slug ne genero un'altro. In questo modo evito che ci siano due slug uguali */
             $title = $data['title'] . '-' . $counter;
-            $slug = Str::slug($title,'-');
-            $data['slug'] = $slug;
-            $slug_exist = Post::where('slug',$slug)->first();
+            $data['slug'] = Str::slug($title, '-');
+            $slug_exist = Post::where('slug',$data['slug'])->first();
             $counter++;
         }
-
-        $data['slug'] = Str::slug($data['title'],'-');
         $new_post = new Post();
         $new_post->fill($data);
         $new_post->save();
@@ -111,20 +102,18 @@ class PostController extends Controller
         $data = $request->all();
 
 
-        if($post->title !== $data['title']){
-
-            $slug = Str::slug($data['title'], '-');
-            $slug_exist = Post::where('slug',$slug)->first();
+        if ($data['slug'] === $post->slug) {
+            $data['slug'] = $post->slug;
+        }else{
+            $data['slug'] =Str::slug($data['title'],'-');
+            $slug_exist = Post::where('slug', $data['slug'])->first();
             $counter = 0;
-            while($slug_exist){
+            while ($slug_exist) {
                 $title = $data['title'] . '-' . $counter;
-                $slug = Str::slug($title,'-');
-                $data['slug'] = $slug;
-                $slug_exist = Post::where('slug',$slug)->first();
+                $$data['slug'] = Str::slug($title, '-');
+                $slug_exist = Post::where('slug', $data['slug'])->first();
                 $counter++;
             }
-        }else{
-            $data['slug'] = $post->slug;
         }
         //dd($data)
         $post->update($data);
