@@ -8,6 +8,6 @@
     <title>Boolpress</title>
 </head>
 <body>
-    <h1><B>BOOLPRESS</B></h1>
+    <h1>BOOLPRESS</h1>
 </body>
 </html>
