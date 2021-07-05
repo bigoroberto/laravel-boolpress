@@ -28,7 +28,7 @@
                             @if ($post->category)
                                 {{ $post->category->name }}
                             @else
-
+                                -
                             @endif
                         </td>
                         <td>

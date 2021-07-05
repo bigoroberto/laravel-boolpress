@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Str;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -88,7 +89,7 @@ class PostController extends Controller
         if(!$post){
             abort(404);
         }
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post','categories'));
     }
 
     /**
@@ -100,27 +101,32 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-
-
         $data = $request->all();
 
-
-        if ($data['slug'] === $post->slug) {
-            $data['slug'] = $post->slug;
-        }else{
-            $data['slug'] =Str::slug($data['title'],'-');
-            $slug_exist = Post::where('slug', $data['slug'])->first();
-            $counter = 0;
-            while ($slug_exist) {
+        if ($post->title !== $data['title']) {
+            $slug = Str::slug($data['title'], '-'); // Lo slug è una forma leggibile e valida per l’URL di un post o di una pagina web. Serve per la SEO
+            $slug_exist = Post::where('slug', $slug)->first(); //cerca se esiste uno slug
+            $counter = 0; // contatore iniziale
+            while ($slug_exist) { // fintanto che esiste evito che ci siano due slug uguali
                 $title = $data['title'] . '-' . $counter;
-                $$data['slug'] = Str::slug($title, '-');
-                $slug_exist = Post::where('slug', $data['slug'])->first();
+                $slug = Str::slug($title, '-');
+                $data['slug'] = $slug;
+                $slug_exist = Post::where('slug', $slug)->first();
                 $counter++;
             }
+        } else {
+            $data['slug'] = $post->slug;
         }
-        //dd($data)
+
+        // $data = $request->all();
+
+        // $data['slug'] = Str::slug($post->title, '-'); // slug;
+
         $post->update($data);
+
         return redirect()->route('admin.posts.show', $post);
+
+
     }
 
     /**

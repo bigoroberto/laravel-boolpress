@@ -26,7 +26,7 @@ class PostRequest extends FormRequest
         return [
             'title' => 'required|max:200',
             'content' => 'required|min:3',
-            'category_id' => 'nullable|exists:cateories,id',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
