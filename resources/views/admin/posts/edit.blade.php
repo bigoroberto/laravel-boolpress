@@ -57,6 +57,30 @@
                         class="form-control @error('content') is-invalid  @enderror"
                         rows="6">{{ old('content', $post->content) }}</textarea>
                 </div>
+                <div class="mb-3">
+                    <h5>Tag</h5>
+                    @foreach ($tags as $tag)
+                        <span class="d-inline-block mr-3">
+                            <input type="checkbox"
+                                   id="tag{{ $loop->iteration }}"
+                                   name="tags[]"            {{-- ti mando un array che avrà come nome tags --}}
+                                   value="{{ $tag->id }}"   {{--come suo valore all'interno ti mando l'id --}}
+
+                                   @if ($errors->any() && in_array($tag->id, old('tags',[])))
+                                       checked
+                                   @elseif (!$errors->any() && $post->tags->contains('$tag->id'))
+                                       checked
+                                   @endif
+
+                                   >
+                            <label for="tag{{ $loop->iteration }}">{{ $tag->name }}</label>
+                        </span>
+                    @endforeach
+                    @error('tags')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror
+                </div>
+
                 <div>
                     <button class="btn btn-primary" type="submit">
                         INVIO

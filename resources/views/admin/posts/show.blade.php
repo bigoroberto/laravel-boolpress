@@ -12,7 +12,13 @@
             @else
             Nessuna categoria associata
             @endif
-            </h3>
+        </h3>
+
+        <div>
+            @foreach ($post->tags as $tag)
+                 <span class="badge badge-primary">{{ $tag->name }}</span>
+            @endforeach
+        </div>
 
         <p>{{ $post->content }}</p>
 
