@@ -3428,7 +3428,10 @@ var render = function() {
   return _c("header", [
     _c(
       "nav",
-      { staticClass: "navbar navbar-expand-lg navbar-light bg-light mb-3" },
+      {
+        staticClass:
+          "navbar navbar-expand-lg navbar navbar-dark bg-primary mb-3"
+      },
       [
         _c(
           "router-link",

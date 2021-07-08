@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary mb-3">
       <router-link class="navbar-brand" :to="{ name: 'home' }"
         >BoolPress</router-link
       >
