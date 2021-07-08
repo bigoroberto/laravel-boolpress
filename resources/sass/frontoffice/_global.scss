@@ -1,0 +1,22 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import '../variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+
+body{
+    font-family: $font-family-sans-serif;
+}
+
+.nav-pages{
+    button{
+        border:none;
+        &:hover{
+            opacity: .8;
+        }
+    }
+}

@@ -13,18 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/' , 'PageController@index');
+//Route::get('/' , 'PageController@index'); che abbiamo sostituito con quello a riga 35
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes(['register'=>false]); impedisce il login
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('admin')
-        ->namespace('Admin')
-        ->middleware('auth')
-        ->name('admin.')
-        ->group(function(){
-            //qui si mettono tutte le rotte ADMIN  ( il nostro CRUD)
-            Route::get('/', 'HomeController@index')->name('home');
-            Route::resource('/posts', 'PostController');
-        });
+    ->namespace('Admin') //la cartella Admin
+    ->middleware('auth')
+    ->name('admin.')
+    ->group(function(){
+        // qui vanno inserite tutte le rotte admin (il nostro CRUD)
+        Route::get('/', 'HomeController@index')->name('home'); // rotta per il controller statico
+        Route::resource('/posts', 'PostController'); // rotta per il controller dinamico
+    })
+;
+
+// tutte le altre rotte verranno gestite dal PageController tramite il comando:
+Route::get('{any?}', 'PageController@index')->where('any','.*');
+
