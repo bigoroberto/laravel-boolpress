@@ -32,5 +32,6 @@ Route::prefix('admin')
 ;
 
 // tutte le altre rotte verranno gestite dal PageController tramite il comando:
-Route::get('{any?}', 'PageController@index')->where('any','.*');
+Route::get('{any?}', 'PageController@index')->where('any','.*');   /* rotta che serve a vue per gestire tutte le rotte possibili alternative a quella Auth e admin  */
+
 
